@@ -3,8 +3,12 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
   Post,
   Put,
+  Query,
   Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -26,11 +30,48 @@ export class UsersController {
 
   @Put('update')
   async update(@Request() req, @Body() updateUser: UpdateUserDTO) {
-    console.log(updateUser);
+
     return await this.userService.update(updateUser, req.user.email);
   }
 
+  @Public()
+  @Get('id')
+  async findOne(@Query('id') id: string, @Request() req) {
+    const userID = req.user?.id;
+    const user = await this.userService.findById(id ? id : userID);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
+  }
+
   @Get()
+  async findAll() {
+    return await this.userService.findAll();
+  }
+
+  @Get('users')
+  async findAllUser(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('pageSize', ParseIntPipe) pageSize: number,
+  ) {
+    return await this.userService.findAllUser({
+      page,
+      pageSize,
+    });
+  }
+  @Get('staffs')
+  async findAllStaff(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('pageSize', ParseIntPipe) pageSize: number,
+  ) {
+    return await this.userService.findAllStaff({
+      page,
+      pageSize,
+    });
+  }
+
+  @Get('one')
   async get(@Request() req) {
     return await this.userService.findOne(req.user.email);
   }
@@ -45,9 +86,24 @@ export class UsersController {
     return await this.userService.changePassword(password, req.user.email);
   }
 
-  @Roles(Role.Admin)
   @Put('change-role')
   async changeRole(@Body() body: UpdateRoleDTO) {
     return await this.userService.changeRole(body.role, body.email);
+  }
+  @Put('change-status')
+  async changeStatus(@Body() body) {
+    return await this.userService.changeStatus(body.status, body.id);
+  }
+
+  @Put('changeToPartner')
+  async changeToPartners(@Body() body, @Request() req) {
+    const userID = req.user.id;
+    return await this.userService.changetoPartner(userID, body);
+  }
+
+  @Put('top-up')
+  async transaction(@Body() body, @Request() req) {
+    const userID = req.user.id;
+    return await this.userService.transaction(userID, body.value);
   }
 }

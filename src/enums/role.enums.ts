@@ -1,5 +1,6 @@
 export enum Role {
-  Normal = 'normal',
-  Partner = 'partner',
+  Normal = 'Cá nhân',
+  Partner = 'Đối tác',
   Admin = 'admin',
+  Staff = 'staff'
 }

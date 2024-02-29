@@ -1,3 +1,4 @@
-export class CreateCategoryDTO{
-    name:string;
+export class CreateCategoryDTO {
+  name: string;
+  slug: string;
 }

@@ -1,4 +1,4 @@
 export class ChangePasswordDTO{
-    OldPass:string;
-    NewPass:string;
+    oldPass:string;
+    newPass:string;
 }

@@ -4,7 +4,7 @@ import { Role } from 'src/enums/role.enums';
 dotenv.config();
 export const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
-  database_mongo: process.env.MONGO_CONNECTION,
+  databaseMongo: process.env.MONGO_CONNECTION,
   secret: process.env.SECRET,
   isPublicKey: process.env.IS_PUBLIC_KEY,
   saltOrRounds: parseInt(process.env.SALT_OR_ROUNDS),

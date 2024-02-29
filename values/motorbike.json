@@ -1,0 +1,13 @@
+{
+  "brand": [
+    { "idBrand": "01", "name": "Honda" },
+    { "idBrand": "02", "name": "Yamaha" }
+  ],
+  "model": [
+    { "idBrand": "01", "idModel": "01", "name": "Vision" },
+    { "idBrand": "01", "idModel": "02", "name": "SH" },
+    { "idBrand": "01", "idModel": "03", "name": "Airblade" },
+    { "idBrand": "02", "idModel": "01", "name": "Exciter" },
+    { "idBrand": "02", "idModel": "02", "name": "Janus" }
+  ]
+}

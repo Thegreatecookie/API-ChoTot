@@ -5,5 +5,8 @@ export class UpdateUserDTO {
   address: object;
   dateOfBirth: Date;
   phone: string;
-  updatedAt:Date;
+  CCID:string;
+  gender:string;
+  active:boolean;
+  role:string;
 }

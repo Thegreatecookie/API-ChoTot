@@ -7,6 +7,8 @@ import {
   Request,
   Query,
   Delete,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Category } from 'src/schemas/category.schema';
 import { CreateCategoryDTO } from 'src/dto/create-category.dto';
@@ -18,27 +20,46 @@ import { Role } from 'src/enums/role.enums';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Roles(Role.Admin)
   @Post('create')
-  async create(@Request() req, @Body() createCategory: CreateCategoryDTO) {
+  async create(@Body() createCategory: CreateCategoryDTO) {
     return await this.categoryService.create(createCategory);
   }
 
-  @Roles(Role.Admin)
   @Put('update')
   async update(@Body() updatePost: UpdateCategoryDTO) {
     return await this.categoryService.update(updatePost);
   }
 
-  @Roles(Role.Admin)
+  @Public()
+  @Get('all')
+  async getAllWithPages(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('pageSize', ParseIntPipe) pageSize: number,
+  ) {
+    return await this.categoryService.findAllWithPages({ page, pageSize });
+  }
+  
+  @Public()
   @Get()
-  async getByCategory() {
-    return await this.categoryService.find();
+  async getAll() {
+    return await this.categoryService.findAll();
+  }
+  @Get('id')
+  async findOne(@Query('id') id: string) {
+    return await this.categoryService.findOne(id);
+  }
+  @Get('name')
+  async findByName(@Query('name') name: string) {
+    return await this.categoryService.findByname(name);
   }
 
-  @Roles(Role.Admin)
-  @Delete('delete')
-  async delete(id:string) {
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
     return await this.categoryService.delete(id);
+  }
+
+  @Put('change-status')
+  async changeStatus(@Body() body) {
+    return await this.categoryService.changeStatus(body.status, body.id);
   }
 }

@@ -1,4 +1,5 @@
 export class UpdatePostDTO {
+  userID: string;
   postID: string;
   condition: string;
   title: string;
@@ -12,5 +13,8 @@ export class UpdatePostDTO {
   createdAt: Date;
   expiredAt: Date;
   updatedAt: Date;
-  detailsPost: Object;
+  detailsPost: string;
+  reason: string;
+  address: string;
+
 }

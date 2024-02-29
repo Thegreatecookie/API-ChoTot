@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
@@ -18,9 +19,16 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Public()
-  @Post('login')
+  @Post('signin')
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.email, signInDto.password);
+  }
+  
+  @HttpCode(HttpStatus.OK)
+  @Public()
+  @Post('admin/signin')
+  adminSignIn(@Body() signInDto: Record<string, any>) {
+    return this.authService.adminSignIn(signInDto.email, signInDto.password);
   }
 
   @UseGuards(AuthGuard)
@@ -28,5 +36,10 @@ export class AuthController {
   getProfile(@Request() req) {
     return req.user;
   }
-  
+
+  @Public()
+  @Get('confirm')
+  validCode(@Query('token') token: string) {
+    return this.authService.checkToken(token);
+  }
 }

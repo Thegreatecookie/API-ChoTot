@@ -7,6 +7,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { RolesGuard } from 'src/roles/roles.guard';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from 'src/schemas/user.schema';
+import { CodeVerify, CodeVerifySchema } from 'src/schemas/codeVerify.schema';
 
 @Module({
   imports: [
@@ -16,6 +19,7 @@ import { RolesGuard } from 'src/roles/roles.guard';
       secret: config.secret,
       signOptions: { expiresIn: '365d' },
     }),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: CodeVerify.name, schema: CodeVerifySchema }])
   ],
   providers: [
     AuthService,

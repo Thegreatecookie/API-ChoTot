@@ -7,53 +7,56 @@ export type PostDocument = Document<Post>;
   timestamps: { createdAt: true },
 })
 export class Post {
-  @Prop()
+  @Prop({ type: String, index: true })
   userID: string;
 
-  @Prop()
+  @Prop({ type: String, index: true })
   categoryID: string;
 
-  @Prop({ required: true })
-  condition: string;
-
-  @Prop({ required: true })
+  @Prop({ type: String, text: true })
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String })
   description: string;
 
-  @Prop({ required: true })
-  manufactor: string;
+  @Prop({ type: [String] })
+  image_path: string[];
 
-  @Prop({ required: true })
-  expert: string;
-
-  @Prop()
-  color: string;
-
-  @Prop()
-  image_path: string;
-
-  @Prop({ default: 'pending' })
+  @Prop({ default: 'pending', type: String })
   status: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Number })
   price: number;
 
-  @Prop({ default: null })
+  @Prop({ type: Date })
   createdAt: Date;
 
-  @Prop({ default: null })
+  @Prop({ default: null, type: Date })
   expiredAt: Date;
 
-  @Prop({ default: null })
+  @Prop({ default: null, type: Date })
   approvedAt: Date;
 
-  @Prop({ required: true })
-  address: string;
+  @Prop({ default: null, type: Date })
+  rejectedAt: Date;
 
   @Prop({ type: mongoose.Schema.Types.Mixed })
-  detailsPost: object;
+  address: Object;
+
+  @Prop({ type: mongoose.Schema.Types.Mixed })
+  detailsPost: Object;
+
+  @Prop({ type: String, default: null })
+  reason: String;
+
+  @Prop({ type: Date, default: null })
+  promotedStartAt: Date;
+
+  @Prop({ type: Date, default: null })
+  promotedEndAt: Date;
+
+  @Prop({ type: Boolean, default: false })
+  isPromoted: boolean;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

@@ -3,47 +3,59 @@ import mongoose, { Document } from 'mongoose';
 export type UserDocument = Document<User>;
 
 @Schema({
-  collection: 'users',
   timestamps: { createdAt: true, updatedAt: true },
 })
 export class User {
-  @Prop()
+  @Prop({ type: String, text: true })
   firstName: string;
 
-  @Prop()
+  @Prop({ type: String, text: true })
   lastName: string;
 
   @Prop({ required: true, unique: true, index: true, type: String })
   email: string;
 
+  @Prop({ type: String, default: 'Chưa xác thực' })
+  emailVerified: string;
+
   @Prop({ unique: true, index: true, type: String })
   phone: string;
-
-  @Prop()
-  gender: string;
 
   @Prop({ required: true, type: String })
   password: string;
 
-  @Prop({ default: 'normal' })
+  @Prop({ default: 'Cá nhân', type: String })
   role: string;
 
-  @Prop()
+  @Prop({ type: Date })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ default: null, type: Date })
   updatedAt: Date;
 
-  @Prop({ default: false })
+  @Prop({ default: 0, type: Number })
+  balance: number;
+
+  @Prop({ default: false, type: Boolean })
   phoneVerified: boolean;
 
-  @Prop()
+  @Prop({ unique: true, type: String })
+  CCID: string;
+
+  @Prop({ type: Date })
   dateOfBirth: Date;
 
-  @Prop()
-  address: string;
-  // @Prop({ type: mongoose.Schema.Types.Mixed })
-  // address: object;
+  @Prop({ type: String })
+  gender: string;
+
+  @Prop({ type: Boolean, default: true })
+  active: boolean;
+
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: true })
+  address: object;
+  
+  @Prop({ type: Date })
+  partnerExpiredAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

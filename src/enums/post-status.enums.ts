@@ -1,7 +1,7 @@
 export enum PostStatus {
   pending = 'pending',
   approved = 'approved',
-  denied = 'denied',
-  timeout = 'timeout',
-  hide = 'hide',
+  rejected = 'rejected',
+  expired = 'expired',
+  hidden = 'hidden',
 }
